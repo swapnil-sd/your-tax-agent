@@ -159,12 +159,25 @@ Wait for confirmation before proceeding.
 
 ## Phase 1: DOCUMENT INGESTION
 
-When the user provides a Google Drive folder link:
-1. Use `mcp__google-drive__listFolder` to enumerate all files
-2. Download all PDFs to `/tmp/tax_agent/<year>/`
-3. Spawn Document Processor agents to classify and extract data
-   - Can run in parallel — one per taxpayer if documents are in subfolders
-   - If all in one folder, run a single processor that separates by taxpayer name/SSN
+The user can provide documents in TWO ways. Ask which they prefer:
+
+### Option A: Google Drive (if MCP configured)
+1. User provides a Google Drive folder URL or folder ID
+2. Use `mcp__google-drive__listFolder` to enumerate all files
+3. Use `mcp__google-drive__downloadFile` to download each PDF to `/tmp/tax_agent/<year>/`
+4. Spawn Document Processor agents to classify and extract data
+
+### Option B: Local Folder (no Google Drive needed)
+1. User provides a local folder path (e.g., `~/Documents/tax-docs-2025/`)
+2. Use `Glob` to find all PDFs in the folder: `<path>/**/*.pdf` and `<path>/**/*.PDF`
+3. Use `Read` to read each PDF directly
+4. Spawn Document Processor agents to classify and extract data
+
+### How to Detect Which Option
+- If user provides a URL containing "drive.google.com" or a Google Drive folder ID → Option A
+- If user provides a local path (starts with `/`, `~`, or `.`) → Option B
+- If Google Drive MCP tools are not available → automatically use Option B
+- If unsure, ask: "Are your documents in Google Drive or a local folder?"
 
 ### Missing Document Check
 After processing, compare extracted documents against the onboarding checklist:

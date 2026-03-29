@@ -127,18 +127,39 @@ This installs: RAG pipeline, dashboard dependencies, agent definitions, and MCP 
 ### Configure
 
 1. Edit `context.md` with your details (the agent also asks during onboarding)
-2. Upload tax documents to a Google Drive folder:
+2. Gather your tax documents:
    - W-2(s) for all taxpayers
    - All brokerage 1099s (Fidelity, Robinhood, Betterment, Schwab, etc.)
    - Form 1098(s) — mortgage interest
    - RSU vesting records ([how to get these](docs/how-rsu-basis-works.md#where-to-get-your-vesting-records))
    - Solar/energy invoices (if applicable)
 
+3. Put them somewhere the agent can read:
+
+   **Option A: Google Drive** (if you have the MCP configured)
+   - Upload PDFs to a Google Drive folder
+   - Share the folder link with the agent
+
+   **Option B: Local folder** (no Google Drive needed)
+   - Put all PDFs in a folder, e.g., `~/Documents/tax-docs-2025/`
+   - Tell the agent the folder path
+
 ### Run
 
 ```bash
 claude
-> /tax-prepare
+```
+
+Then say:
+```
+Use the tax-prepare agent to prepare my 2025 taxes.
+My documents are in ~/Documents/tax-docs-2025/
+```
+
+Or with Google Drive:
+```
+Use the tax-prepare agent to prepare my 2025 taxes.
+My documents are at: https://drive.google.com/drive/folders/...
 ```
 
 ### View Results
