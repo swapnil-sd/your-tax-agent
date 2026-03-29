@@ -1,0 +1,180 @@
+{
+  "taxYear": 2025,
+  "filingStatus": "MarriedFilingJointly",
+  "primary": { "name": "Alex Chen" },
+  "spouse": { "name": "Jordan Chen" },
+  "summary": {
+    "federalRefund": 10273,
+    "nyRefund": 6956,
+    "njOwed": 38,
+    "totalBack": 17191,
+    "naiveApproachOwed": 20000,
+    "totalSwing": 37191
+  },
+  "income": {
+    "wages": {
+      "primary": { "employer": "TechCo Inc", "wages": 203996, "withheld": 37451, "fourOhOneK": 7087, "rsu": 34892 },
+      "spouse": { "employer": "TechCo Inc", "wages": 263607, "withheld": 54626, "fourOhOneK": 11197, "rsu": 71438 },
+      "combined": 467603
+    },
+    "dividends": { "ordinary": 4879, "qualified": 2933 },
+    "interest": 41,
+    "capitalGains": { "shortTerm": -1384, "longTerm": 16104, "carryforward": -90, "net": 14631 },
+    "scheduleC": { "businessName": "Photography", "income": 0, "expenses": 11050, "net": -11050 },
+    "agi": 476103
+  },
+  "rsuCorrections": {
+    "primary": {
+      "totalProceeds": 14069,
+      "reportedBasis": 0,
+      "correctedBasis": 14069,
+      "actualGain": 0,
+      "phantomIncomeEliminated": 14069,
+      "taxSaved": 4502,
+      "transactions": [
+        { "date": "02/21/25", "shares": 3.0, "proceeds": 658.55, "basis": 658.57, "gain": -0.02 },
+        { "date": "05/15/25", "shares": 3.0, "proceeds": 612.62, "basis": 612.62, "gain": 0.00 },
+        { "date": "05/21/25", "shares": 21.0, "proceeds": 4234.64, "basis": 4234.65, "gain": -0.01 },
+        { "date": "08/21/25", "shares": 19.848, "proceeds": 4397.42, "basis": 4397.42, "gain": 0.00 },
+        { "date": "11/17/25", "shares": 2.109, "proceeds": 488.20, "basis": 488.21, "gain": -0.01 },
+        { "date": "11/21/25", "shares": 16.873, "proceeds": 3677.21, "basis": 3677.21, "gain": 0.00 }
+      ]
+    },
+    "spouse": {
+      "totalProceeds": 28284,
+      "reportedBasis": 0,
+      "correctedBasis": 28284,
+      "actualGain": 0,
+      "phantomIncomeEliminated": 28284,
+      "taxSaved": 9051,
+      "transactions": [
+        { "date": "05/15/25", "shares": 15.0, "proceeds": 3063.11, "basis": 3063.11, "gain": 0.00 },
+        { "date": "05/21/25", "shares": 37.0, "proceeds": 7461.04, "basis": 7461.04, "gain": 0.00 },
+        { "date": "08/21/25", "shares": 36.147, "proceeds": 8008.54, "basis": 8008.54, "gain": 0.00 },
+        { "date": "11/17/25", "shares": 12.257, "proceeds": 2837.33, "basis": 2837.33, "gain": 0.00 },
+        { "date": "11/21/25", "shares": 31.724, "proceeds": 6913.75, "basis": 6913.75, "gain": 0.00 }
+      ]
+    },
+    "combinedSavings": 13553
+  },
+  "deductions": {
+    "method": "itemized",
+    "itemized": {
+      "mortgageInterest": 38418,
+      "points": 1088,
+      "salt": 10000,
+      "charitable": 1452,
+      "total": 50958
+    },
+    "standardDeduction": 29200,
+    "savingsVsStandard": 21758
+  },
+  "credits": {
+    "solar": { "cost": 24650, "credit": 7395 },
+    "foreignTax": 49,
+    "qbi": 99,
+    "total": 7543
+  },
+  "taxCalculation": {
+    "taxableIncome": 425046,
+    "incomeTax": 87155,
+    "additionalMedicare": 2123,
+    "niit": 743,
+    "grossTax": 90021,
+    "totalCredits": 7543,
+    "netTax": 82478,
+    "totalWithholding": 92850,
+    "result": 10273
+  },
+  "stateReturns": {
+    "ny": {
+      "form": "IT-203",
+      "type": "Non-Resident",
+      "nyWages": 467602,
+      "nyTaxCalculated": 27144,
+      "nyTaxWithheld": 34100,
+      "refund": 6956
+    },
+    "nj": {
+      "form": "NJ-1040",
+      "type": "Resident",
+      "njGrossIncome": 480093,
+      "propertyTaxDeduction": 20022,
+      "njTaxBeforeCredit": 27182,
+      "creditForNY": 27144,
+      "owed": 38
+    }
+  },
+  "optimizations": [
+    { "name": "RSU Basis Correction", "savings": 13553, "risk": "safe", "description": "Eliminated $42,353 in phantom income from sell-to-cover RSU sales" },
+    { "name": "File MFJ (not MFS)", "savings": 6063, "risk": "safe", "description": "Wider brackets save $6K+ at combined $467K income" },
+    { "name": "Itemize Deductions", "savings": 5556, "risk": "safe", "description": "$50,958 itemized vs $29,200 standard deduction" },
+    { "name": "Solar Credit (30%)", "savings": 7395, "risk": "safe", "description": "30% of $24,650 solar installation cost" },
+    { "name": "Photography Schedule C", "savings": 3536, "risk": "moderate", "description": "$11,050 business loss against ordinary income" },
+    { "name": "Foreign Tax Credit", "savings": 49, "risk": "safe", "description": "Dollar-for-dollar credit vs deduction" },
+    { "name": "QBI Deduction", "savings": 24, "risk": "safe", "description": "20% of Section 199A dividends" }
+  ],
+  "documentChecklist": [
+    { "name": "W-2 (Primary)", "status": "complete" },
+    { "name": "W-2 (Spouse)", "status": "complete" },
+    { "name": "1098 #1 (Original Mortgage)", "status": "complete" },
+    { "name": "1098 #2 (Refinance)", "status": "complete" },
+    { "name": "RSU Vesting Records (Primary)", "status": "complete" },
+    { "name": "RSU Vesting Records (Spouse)", "status": "complete" },
+    { "name": "Fidelity 1099", "status": "complete" },
+    { "name": "Robinhood 1099", "status": "complete" },
+    { "name": "Betterment 1099", "status": "complete" },
+    { "name": "Titan 1099", "status": "complete" },
+    { "name": "Solar Installation Invoice", "status": "needed" },
+    { "name": "Photography Expense Receipts", "status": "needed" },
+    { "name": "Property Tax Bill", "status": "needed" }
+  ],
+  "audit": {
+    "review": {
+      "total_checks": 30,
+      "passed": 27,
+      "warnings": 2,
+      "errors": 0,
+      "user_review_needed": 0,
+      "checks": [
+        { "id": 1, "name": "AGI calculation", "category": "math_consistency", "status": "pass", "expected": 476103, "found": 476103 },
+        { "id": 2, "name": "Taxable income calculation", "category": "math_consistency", "status": "pass" },
+        { "id": 3, "name": "Total tax calculation", "category": "math_consistency", "status": "pass" },
+        { "id": 4, "name": "Refund/owed calculation", "category": "math_consistency", "status": "pass" },
+        { "id": 5, "name": "Itemized deductions total", "category": "math_consistency", "status": "pass" },
+        { "id": 6, "name": "Capital gains netting", "category": "math_consistency", "status": "pass" },
+        { "id": 7, "name": "SALT cap ($10K MFJ)", "category": "irs_limits", "status": "pass" },
+        { "id": 8, "name": "Mortgage interest limit", "category": "irs_limits", "status": "pass", "details": "Pro-rated for $765K > $750K limit" },
+        { "id": 9, "name": "Capital loss limitation", "category": "irs_limits", "status": "pass" },
+        { "id": 10, "name": "401(k) contribution limit", "category": "irs_limits", "status": "warning", "details": "Primary contributed only $7,087 of $23,500 limit — $16,413 unused", "responsible_agent": "doc_processor" },
+        { "id": 11, "name": "Solar credit cap", "category": "irs_limits", "status": "pass" },
+        { "id": 12, "name": "Charitable contribution limit", "category": "irs_limits", "status": "pass" },
+        { "id": 13, "name": "Standard deduction correctness", "category": "irs_limits", "status": "pass" },
+        { "id": 14, "name": "QBI deduction calculation", "category": "irs_limits", "status": "pass" },
+        { "id": 15, "name": "RSU gain reasonableness", "category": "rsu_basis", "status": "warning", "details": "Transaction on 11/21/25 has gain of $0.59 (within $5 tolerance)", "responsible_agent": "rsu_specialist" },
+        { "id": 16, "name": "RSU basis math", "category": "rsu_basis", "status": "pass" },
+        { "id": 17, "name": "RSU W-2 tie-out", "category": "rsu_basis", "status": "pass" },
+        { "id": 18, "name": "All unreported basis corrected", "category": "rsu_basis", "status": "pass" },
+        { "id": 19, "name": "AGI consistency", "category": "cross_agent", "status": "pass" },
+        { "id": 20, "name": "RSU gains consistency", "category": "cross_agent", "status": "pass" },
+        { "id": 21, "name": "Federal AGI consistency", "category": "cross_agent", "status": "pass" },
+        { "id": 22, "name": "NY wages consistency", "category": "cross_agent", "status": "pass" },
+        { "id": 23, "name": "NJ wages consistency", "category": "cross_agent", "status": "pass" },
+        { "id": 24, "name": "NJ credit upper bound", "category": "state_return", "status": "pass" },
+        { "id": 25, "name": "NJ credit lower bound", "category": "state_return", "status": "pass" },
+        { "id": 26, "name": "NY allocation percentage", "category": "state_return", "status": "pass" },
+        { "id": 27, "name": "NJ gross income completeness", "category": "state_return", "status": "pass" },
+        { "id": 28, "name": "Filing order (NY before NJ)", "category": "state_return", "status": "pass" },
+        { "id": 29, "name": "MFJ requires spouse data", "category": "filing_status", "status": "pass" },
+        { "id": 30, "name": "HoH requires dependent", "category": "filing_status", "status": "pass", "details": "N/A — filing MFJ" }
+      ]
+    },
+    "agents": {
+      "doc_processor": { "agent": "doc_processor", "status": "success", "duration_ms": 171107, "retry_count": 0, "decisions": [{ "decision": "Classified 13 documents", "reason": "Pattern matching on document keywords" }] },
+      "tax_strategist": { "agent": "tax_strategist", "status": "success", "duration_ms": 123258, "retry_count": 0, "decisions": [{ "decision": "Filing status: MFJ", "reason": "MFJ saves $6,063 vs MFS" }, { "decision": "Deduction method: Itemized", "reason": "Itemized $50,958 > Standard $29,200" }] },
+      "rsu_specialist": { "agent": "rsu_specialist", "status": "success", "duration_ms": 47656, "retry_count": 0, "decisions": [{ "decision": "11 sell-to-cover transactions corrected", "reason": "All matched to vest dates with FMV from vesting reports" }] },
+      "state_expert": { "agent": "state_expert", "status": "success", "duration_ms": 56451, "retry_count": 0, "decisions": [{ "decision": "NY refund $6,956", "reason": "Employers over-withheld NY tax at individual rates" }, { "decision": "NJ owed $38", "reason": "NY credit covers 99.9% of NJ tax" }] },
+      "tax_reviewer": { "agent": "tax_reviewer", "status": "success", "duration_ms": 15000, "retry_count": 0, "decisions": [{ "decision": "30/30 checks completed, 0 errors", "reason": "All calculations verified against IRS rules" }] }
+    }
+  }
+}
