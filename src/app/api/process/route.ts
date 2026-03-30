@@ -1,4 +1,8 @@
 import { NextRequest } from 'next/server'
+import { orchestrate } from '@/lib/orchestrator'
+import { processUploadedFiles } from '@/lib/pdf-reader'
+
+export const maxDuration = 300 // 5 minute timeout for Vercel
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
@@ -6,7 +10,16 @@ export async function POST(req: NextRequest) {
   const onboarding = JSON.parse(formData.get('onboarding') as string)
   const files = formData.getAll('files') as File[]
 
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: 'API key required' }), { status: 400 })
+  }
+
+  if (files.length === 0) {
+    return new Response(JSON.stringify({ error: 'No files uploaded' }), { status: 400 })
+  }
+
   const encoder = new TextEncoder()
+
   const stream = new ReadableStream({
     async start(controller) {
       function send(data: object) {
@@ -14,55 +27,21 @@ export async function POST(req: NextRequest) {
       }
 
       try {
-        // Phase 1: Document Processing
-        send({ type: 'phase', phase: 'Ingesting' })
-        send({ type: 'agent_progress', agent: 'doc_processor', status: 'running', progress: 0, message: 'Reading documents...' })
+        // Extract text from PDFs
+        send({ type: 'agent_progress', agent: 'doc_processor', status: 'running', progress: 5, message: 'Extracting text from PDFs...' })
+        const documents = await processUploadedFiles(files)
+        send({ type: 'agent_progress', agent: 'doc_processor', status: 'running', progress: 15, message: `Extracted text from ${documents.length} files` })
 
-        // Read PDF files
-        const documents: Array<{ name: string; text: string }> = []
-        for (const file of files) {
-          const buffer = Buffer.from(await file.arrayBuffer())
-          // In production, use pdf-parse here to extract text
-          documents.push({ name: file.name, text: `[PDF content of ${file.name}]` })
-          send({ type: 'agent_progress', agent: 'doc_processor', status: 'running', progress: Math.round((documents.length / files.length) * 100), message: `Read ${file.name}` })
+        // Run the orchestrator
+        for await (const event of orchestrate(documents, onboarding, apiKey)) {
+          send(event)
         }
-
-        send({ type: 'agent_progress', agent: 'doc_processor', status: 'complete', progress: 100, message: `Processed ${files.length} documents` })
-
-        // Phase 2: Analysis (parallel in production)
-        send({ type: 'phase', phase: 'Analyzing' })
-
-        // Tax Strategist
-        send({ type: 'agent_progress', agent: 'tax_strategist', status: 'running', progress: 0, message: 'Analyzing filing strategy...' })
-        // In production: call Claude API with tax strategist prompt + extracted data
-        send({ type: 'agent_progress', agent: 'tax_strategist', status: 'complete', progress: 100, message: 'Strategy optimized' })
-
-        // RSU Specialist
-        send({ type: 'agent_progress', agent: 'rsu_specialist', status: 'running', progress: 0, message: 'Checking RSU basis...' })
-        send({ type: 'agent_progress', agent: 'rsu_specialist', status: 'complete', progress: 100, message: 'Basis corrected' })
-
-        // State Expert
-        send({ type: 'agent_progress', agent: 'state_expert', status: 'running', progress: 0, message: 'Calculating state returns...' })
-        send({ type: 'agent_progress', agent: 'state_expert', status: 'complete', progress: 100, message: 'NY + NJ calculated' })
-
-        // Phase 3: Review
-        send({ type: 'phase', phase: 'Reviewing' })
-        send({ type: 'agent_progress', agent: 'reviewer', status: 'running', progress: 0, message: 'Running IRS compliance checks...' })
-        send({ type: 'agent_progress', agent: 'reviewer', status: 'complete', progress: 100, message: '30/30 checks passed' })
-
-        // Phase 4: Complete — load sample data as placeholder
-        send({ type: 'phase', phase: 'Complete' })
-
-        // In production, this would be the actual computed results
-        // For now, signal completion and let frontend load sample data
-        send({ type: 'complete', data: null })
-
       } catch (error) {
-        send({ type: 'error', message: String(error) })
+        send({ type: 'error', message: `Processing error: ${String(error)}` })
       }
 
       controller.close()
-    }
+    },
   })
 
   return new Response(stream, {
